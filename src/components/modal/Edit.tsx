@@ -34,7 +34,7 @@ export const EditModal = () => {
     return temp[0]
   }, [companyList, query.edit])
 
-  const { errors, submitForm } = useForm(CompanyForm, (values) => {
+  const { errors, submitForm, forceUpdateError } = useForm(CompanyForm, (values) => {
     updateCompany({ body: values, id: String(query.edit ?? '') })
     toast.success(`${cleanedData.name} foi editada com sucesso!`)
     replace({ href: asPath, query: { ...query, edit: '' } })
@@ -50,10 +50,10 @@ export const EditModal = () => {
   }, [query.edit])
 
   useEffect(() => {
-    if (cleanedData?.id || !query.edit) return
+    if (cleanedData?.id || !query.edit) return forceUpdateError(undefined)
 
     replace({ href: asPath, query: { ...query, edit: '' } })
-  }, [cleanedData, asPath, query, replace])
+  }, [cleanedData, asPath, query, replace, forceUpdateError])
 
   return open ? (
     <>

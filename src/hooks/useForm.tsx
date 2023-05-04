@@ -40,7 +40,8 @@ const useForm = <TValues,>(
 
   return {
     submitForm,
-    errors: stateError
+    errors: stateError,
+    forceUpdateError: setStateError
   }
 }
 
