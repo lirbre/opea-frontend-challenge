@@ -97,7 +97,7 @@ export const useCompany = () => {
         (+String(query?.page ?? 1) - 1) * limit,
         +String(query?.page ?? 1) * limit
       ),
-    [companyList, query.page]
+    [companyList, query]
   )
 
   const totalPages = useMemo(

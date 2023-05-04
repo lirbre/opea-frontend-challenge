@@ -8,6 +8,8 @@ export const CompanyPagination = () => {
   const { query, asPath, replace } = useRouter()
 
   useEffect(() => {
+    if (totalPages === 0) return
+
     if (+String(query.page ?? 1) > totalPages) {
       replace({ href: asPath, query: { ...query, page: 1 } })
       return
@@ -43,7 +45,7 @@ export const CompanyPagination = () => {
           })
         }
         className="enabled:text-wine-brand enabled:hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
-        disabled={+String(query.page ?? 1) === totalPages}
+        disabled={+String(query.page ?? 1) === totalPages || totalPages === 0}
       >
         &#x2192;
       </button>
