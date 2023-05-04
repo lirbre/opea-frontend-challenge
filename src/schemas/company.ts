@@ -1,15 +1,16 @@
 import { z } from 'zod'
 
-export const RegexCNPJ = /[0-9]{14}/
+export const RegexCNPJ = /[0-9]/g
 
 export const CompanyForm = z.object({
   name: z.string().min(1, { message: 'Por favor, insira um nome.' }),
   email: z.string().min(1, { message: 'Por favor, insira um email válido.' }),
   cnpj: z
     .string()
+    .min(1, { message: 'Por favor, insira um CNPJ válido.' })
     .length(14, { message: 'Por favor, insira um CNPJ válido.' })
     .regex(RegexCNPJ, {
-      message: 'Por favor, insira somente os digitos numéricos.'
+      message: 'Por favor, insira somente digitos numéricos.'
     })
 })
 

@@ -119,7 +119,7 @@ export const EditModal = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           {errors?.email ? (
-            <span className="px-6 text-sm text-wine-brand">{errors.name}</span>
+            <span className="px-6 text-sm text-wine-brand">{errors.email}</span>
           ) : (
             <></>
           )}
