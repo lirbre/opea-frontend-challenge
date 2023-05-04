@@ -1,30 +1,51 @@
+import { useCompany } from '@/hooks/useCompany'
 import useForm from '@/hooks/useForm'
-import { CompayForm } from '@/schemas/company'
+import { CompanyAPI, CompanyForm } from '@/schemas/company'
+import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useMemo, useState } from 'react'
+import { z } from 'zod'
 import { Input } from '../Input'
 
 export const EditModal = () => {
-  const [open, setOpen] = useState<boolean>(true)
+  const { query, replace, asPath } = useRouter()
 
-  const { errors, submitForm } = useForm(CompayForm, () =>
-    console.log('submited')
-  )
+  const open = !!query.edit
+
+  const { companyList, updateCompany } = useCompany() 
+
   const [name, setName] = useState<string>('')
   const [cnpj, setCnpj] = useState<string>('')
   const [email, setEmail] = useState<string>('')
+
+  const cleanedData = useMemo(() => {
+    if (!companyList) return { id: '' }
+    
+    const temp = companyList.filter((item) => item.id === query.edit).map((item) => {
+      setName(item?.name ?? '')
+      setEmail(item?.email ?? '')
+      setCnpj(item?.cnpj ?? '')
+
+      return item
+    })    
+
+    return { id: temp[0]?.id }
+  }, [companyList, query.edit])
+
+  const { errors, submitForm } = useForm(CompanyForm.extend({ id: z.string() }), updateCompany)
 
   return open ? (
     <>
       {' '}
       <div
         className="fixed bottom-1/2 right-1/2 flex h-screen w-screen translate-x-1/2 translate-y-1/2 cursor-pointer items-center justify-center backdrop-blur-sm"
-        onClick={() => setOpen(false)}
+        onClick={() => replace({ href: asPath, query: { ...query, edit: '' } })}
       ></div>
       <form
         onSubmit={(e) => {
           e.preventDefault()
-          submitForm({ name, cnpj, email })
+          submitForm({ id: cleanedData.id, name, email, cnpj })
         }}
         className="min-h-1/2 fixed bottom-1/2 right-1/2 z-10 flex w-11/12 translate-x-1/2 translate-y-1/2 cursor-default flex-col justify-between gap-4 rounded-opea bg-white pb-6 drop-shadow-md lg:w-1/4"
       >
@@ -37,7 +58,9 @@ export const EditModal = () => {
               height={20}
               alt="A close icon. An 'x' letter with a rounded border around it"
               className="cursor-pointer hover:opacity-80"
-              onClick={() => setOpen(false)}
+              onClick={() =>
+                replace({ href: asPath, query: { ...query, edit: '' } })
+              }
             />
           </button>
         </div>
@@ -98,6 +121,9 @@ export const EditModal = () => {
               type="reset"
               className="rounded-opea border-2 border-gray-input px-3 py-2 tracking-wide text-gray-helper hover:opacity-80"
               aria-label="modal-cancel"
+              onClick={() =>
+                replace({ href: asPath, query: { ...query, edit: '' } })
+              }
             >
               Cancelar
             </button>
