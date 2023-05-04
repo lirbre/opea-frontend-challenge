@@ -1,11 +1,10 @@
 import { useCompany } from '@/hooks/useCompany'
 import useForm from '@/hooks/useForm'
-import { CompanyAPI, CompanyForm } from '@/schemas/company'
-import { useQuery } from '@tanstack/react-query'
+import { CompanyForm } from '@/schemas/company'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo, useState } from 'react'
-import { z } from 'zod'
+import { toast } from 'sonner'
 import { Input } from '../Input'
 
 export const EditModal = () => {
@@ -20,7 +19,7 @@ export const EditModal = () => {
   const [email, setEmail] = useState<string>('')
 
   const cleanedData = useMemo(() => {
-    if (!companyList) return { id: '' }
+    if (!companyList) return { id: '', name: '', cnpj: '', email: '' }
 
     const temp = companyList
       .filter((item) => item.id === query.edit)
@@ -32,13 +31,14 @@ export const EditModal = () => {
         return item
       })
 
-    return { id: temp[0]?.id }
+    return temp[0]
   }, [companyList, query.edit])
 
-  const { errors, submitForm } = useForm(
-    CompanyForm.extend({ id: z.string() }),
-    updateCompany
-  )
+  const { errors, submitForm } = useForm(CompanyForm, (values) => {
+    updateCompany({ body: values, id: String(query.edit ?? '') })
+    toast.success(`${cleanedData.name} foi editada com sucesso!`)
+    replace({ href: asPath, query: { ...query, edit: '' } })
+  })
 
   useEffect(() => {
     if (!!query.edit) {
@@ -50,10 +50,10 @@ export const EditModal = () => {
   }, [query.edit])
 
   useEffect(() => {
-    if (cleanedData.id || !query.edit) return
+    if (cleanedData?.id || !query.edit) return
 
     replace({ href: asPath, query: { ...query, edit: '' } })
-  }, [cleanedData.id, asPath, query, replace])
+  }, [cleanedData, asPath, query, replace])
 
   return open ? (
     <>
@@ -65,7 +65,7 @@ export const EditModal = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault()
-          submitForm({ id: cleanedData.id, name, email, cnpj })
+          submitForm({ name, email, cnpj })
         }}
         className="min-h-1/2 fixed bottom-1/2 right-1/2 z-10 flex w-11/12 translate-x-1/2 translate-y-1/2 cursor-default flex-col justify-between gap-4 rounded-opea bg-white pb-6 drop-shadow-md lg:w-1/4"
       >
@@ -127,8 +127,12 @@ export const EditModal = () => {
         <div className="flex items-center justify-between px-6">
           <button
             name="modal-delete"
+            type="reset"
             className="rounded-opea border-2 border-gray-button p-1.5 hover:opacity-80"
-            onClick={() => deleteCompany(String(query.edit || ''))}
+            onClick={() => {
+              deleteCompany(String(query.edit || ''))
+              replace({ href: asPath, query: { ...query, edit: '' } })
+            }}
           >
             <Image
               src="/images/delete-icn.svg"
