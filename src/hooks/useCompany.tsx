@@ -1,23 +1,37 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
 import { CompanyAPI, CompanyForm } from '@/schemas/company'
-import { json } from 'stream/consumers'
+import { useRouter } from 'next/router'
+
+export const companyListKey = ['company-list']
 
 export const useCompany = () => {
   const queryClient = useQueryClient()
+
+  const { query } = useRouter()
 
   const {
     data: companyList,
     isLoading,
     isError
-  } = useQuery(['company-list'], () =>
-    fetch('https://homolog.planetasec.com.br/prova/front/api/clients').then(async (res) => {
+  } = useQuery(
+    [...companyListKey, { search: query.search }],
+    () =>
+      fetch(
+        `https://homolog.planetasec.com.br/prova/front/api/clients${
+          query.search ? '?text=' + query.search : ''
+        }`
+      ).then(async (res) => {
         const data = await res.json()
 
         const info = CompanyAPI.safeParse(data)
 
         return info.success ? info.data : []
-    })
+      }),
+    {
+      cacheTime: 6000,
+      staleTime: 6000
+    }
   )
 
   const { mutate: deleteCompany } = useMutation(
@@ -31,7 +45,7 @@ export const useCompany = () => {
       }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['company-list'])
+        queryClient.invalidateQueries(companyListKey)
       }
     }
   )
@@ -47,7 +61,7 @@ export const useCompany = () => {
       }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['company-list'])
+        queryClient.invalidateQueries(companyListKey)
       }
     }
   )
@@ -63,7 +77,7 @@ export const useCompany = () => {
       }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['company-list'])
+        queryClient.invalidateQueries(companyListKey)
       }
     }
   )
