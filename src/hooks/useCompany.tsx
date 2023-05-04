@@ -15,7 +15,7 @@ export const useCompany = () => {
     isLoading,
     isError
   } = useQuery(
-    [...companyListKey, { search: query.search }],
+    [...companyListKey, { search: query.search ?? '' }],
     () =>
       fetch(
         `https://homolog.planetasec.com.br/prova/front/api/clients${
