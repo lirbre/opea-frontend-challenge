@@ -69,7 +69,7 @@ export const EditModal = () => {
         }}
         className="min-h-1/2 fixed bottom-1/2 right-1/2 z-10 flex w-11/12 translate-x-1/2 translate-y-1/2 cursor-default flex-col justify-between gap-4 rounded-opea bg-white pb-6 drop-shadow-md lg:w-1/4"
       >
-        <div className="flex h-10 w-full items-center justify-between rounded-opea border-b-2 border-[#DDDDDD] py-2 pl-4 pr-3">
+        <div className="flex h-10 w-full items-center justify-between rounded-t-opea border-b-2 border-[#DDDDDD] py-2 pl-4 pr-3">
           <p className="text-lg tracking-wide text-gray-text">Editar Empresa</p>
           <button type="reset" aria-label="modal-close-icn">
             <Image
