@@ -14,7 +14,8 @@ module.exports = {
         'gray-input': '#DDDDDD',
         'gray-button': '#C7C9CC',
         'wine-brand': '#630A37',
-        'gray-helper': '#797979'
+        'gray-helper': '#797979',
+        'gray-font': '#616161'
       },
       borderRadius: {
         opea: '4px'
