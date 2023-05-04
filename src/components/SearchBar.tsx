@@ -20,7 +20,7 @@ export const SearchBar = () => {
       className="flex w-full max-w-xs gap-1.5 rounded-opea border-2 border-gray-input pr-2.5"
     >
       <input
-        className="w-full max-w-xs rounded-opea px-2.5 py-1 text-sm"
+        className="w-full max-w-xs rounded-opea px-2.5 py-1 text-sm tracking-wide text-gray-font"
         placeholder="Buscar empresa..."
         defaultValue={String(query?.search ?? '')}
         ref={searchRef}
