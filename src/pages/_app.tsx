@@ -11,6 +11,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Navbar } from '@/components/Navbar'
 import { EditModal } from '@/components/modal/Edit'
 import { CreateModal } from '@/components/modal/Create'
+import { Toaster } from 'sonner'
 
 const queryClient = new QueryClient()
 
@@ -21,6 +22,7 @@ const MyApp: AppType<{ dehydratedState: DehydratedState }> = ({
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
+        <Toaster position="top-right" richColors />
         <Navbar />
         <Component {...pageProps} />
         <EditModal />
