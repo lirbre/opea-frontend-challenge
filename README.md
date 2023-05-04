@@ -37,6 +37,10 @@ pnpm dev
 - Para validação de tipagem e formulários (com o custom hook [useForm](https://github.com/lirbre/opea-frontend-challenge/blob/main/src/hooks/useForm.tsx) e os schemas criados para o zod), foi utilizado o [zod](https://zod.dev/) como extensão do TypeScript. 
 - Como forma de controle de estado global, foi utiizado a URL [como forma de implementar essa ideia aqui](https://betterprogramming.pub/how-and-why-you-should-store-react-ui-state-in-the-url-f2013a204cb2). Isso torna possível coisas como [https://opea-frontend-challenge.vercel.app/?search=empresa](https://opea-frontend-challenge.vercel.app/?search=empresa) trazendo benefícios de compartilhamento e simplicidade ao projeto. 
 
+### Speed reports, na Vercel:
+
+![image](https://user-images.githubusercontent.com/86065449/236294705-96513e69-5d2a-4fe6-996a-4fcafc47640b.png)
+
 ### Página principal:
 
 ![image](https://user-images.githubusercontent.com/86065449/236275936-485715ea-2357-46e6-939e-2b3f66cb176b.png)
