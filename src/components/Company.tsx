@@ -25,7 +25,7 @@ export const Company = ({
   return (
     <button
       aria-label={`Edit ${company.name} button`}
-      className="flex w-full items-center gap-6 rounded-l-full border-2 border-transparent bg-white p-2 shadow-sm hover:opacity-80"
+      className="flex h-20 w-full items-center gap-6 rounded-l-full border-2 border-transparent bg-white p-2 shadow-sm hover:opacity-80"
       onClick={() =>
         replace({ href: asPath, query: { ...query, edit: company.id } })
       }
