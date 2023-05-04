@@ -10,9 +10,14 @@ export const Navbar = () => {
           height={32}
           alt="Opea logo"
         />
-        <div className="flex items-center justify-center gap-3">
-          <p className="text-sm font-medium tracking-wide text-gray-brand">
-            Nome do Usuário
+        <a
+          href="https://www.linkedin.com/in/lirbre/"
+          target="_blank"
+          rel="noreferrer"
+          className="flex cursor-pointer items-center justify-center gap-3"
+        >
+          <p className="text-sm font-medium tracking-wider text-gray-brand">
+            brenoliradev
           </p>
           <Image
             src="/images/icon-user.png"
@@ -20,7 +25,7 @@ export const Navbar = () => {
             height={24}
             alt="blank user image"
           />
-        </div>
+        </a>
       </div>
     </nav>
   )
