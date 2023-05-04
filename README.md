@@ -1,8 +1,17 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Esse é um projeto feito no intuito de resolver o [desafio para Frontend da Opea](https://opea.notion.site/Avalia-o-Front-end-d82f51f5ab18422ca28ed8abf85f5b55). Através desse readme, venho explicar as escolhas e os motivos das minhas decisões técnicas. [acesse o deploy dele, aqui](https://opea-frontend-challenge.vercel.app/)
 
-## Getting Started
+## Para rodar o projeto localmente
+É um projeto feito através do do [create-next-app](https://nextjs.org/docs/pages/api-reference/create-next-app), logo, basta instalar as dependencias:
 
-First, run the development server:
+```bash
+npm run install
+# or
+yarn install
+# or
+pnpm install
+```
+
+E, em seguida:
 
 ```bash
 npm run dev
@@ -12,27 +21,12 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Sobre o projeto:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- Estruturado em SPA, através do Next.js um framework feito a partir do React.js. 
+- Estilizado através de PostCSS, uma opção mais moderna que me permitiu - com mais facilidade - utilizar o [Tailwind CSS](https://tailwindcss.com/docs/installation) - através dessa mistura de "Post CSS" e tailwind, o projeto foi estilizado através de classes utilitárias; [padrão adotado pelo Tailwind](https://tailwindcss.com/docs/utility-first).
+- Para toasts, foi utilizado o [Sonner](https://sonner.emilkowal.ski/) - Projeto Open Source que eu tive algumas contribuições.
+- Para mutations e queries, ou seja, interagir com a API Rest, utilizei o [react-query](https://tanstack.com/query/v3/)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
