@@ -5,7 +5,7 @@ import { EmptyCompany } from './EmptyCompany'
 import { LoadingCompany } from './LoadingCompany'
 
 export const CompanyList = () => {
-  const { companyList, isLoading } = useCompany()
+  const { paginatedData, isLoading } = useCompany()
 
   if (isLoading)
     return (
@@ -18,8 +18,8 @@ export const CompanyList = () => {
   return (
     <div className="flex w-full flex-col gap-1.5 px-4 py-4 lg:px-8">
       <CreateCompany />
-      {companyList?.length ? (
-        companyList?.map((item) => <Company key={item.id} company={item} />)
+      {paginatedData?.length ? (
+        paginatedData?.map((item) => <Company key={item.id} company={item} />)
       ) : (
         <EmptyCompany />
       )}
