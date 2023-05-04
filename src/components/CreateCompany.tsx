@@ -7,7 +7,7 @@ export const CreateCompany = () => {
   return (
     <button
       aria-label="Create company button"
-      className="flex w-full items-center justify-center rounded-l-full border-2 border-gray-input p-2 hover:opacity-80"
+      className="flex h-20 w-full items-center justify-center rounded-l-full border-2 border-gray-input p-2 hover:opacity-80"
       onClick={() =>
         replace({ href: asPath, query: { ...query, create: true } })
       }
