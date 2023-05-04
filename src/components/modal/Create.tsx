@@ -26,10 +26,12 @@ export const CreateModal = () => {
           e.preventDefault()
           submitForm({ name, cnpj, email })
         }}
-        className="fixed bottom-1/2 right-1/2 z-10 flex min-h-1/2 gap-4 w-11/12 translate-x-1/2 translate-y-1/2 cursor-default flex-col justify-between rounded-opea bg-white pb-6 drop-shadow-md lg:w-1/4"
+        className="min-h-1/2 fixed bottom-1/2 right-1/2 z-10 flex w-11/12 translate-x-1/2 translate-y-1/2 cursor-default flex-col justify-between gap-4 rounded-opea bg-white pb-6 drop-shadow-md lg:w-1/4"
       >
         <div className="flex h-10 w-full items-center justify-between rounded-opea border-b-2 border-[#DDDDDD] py-2 pl-4 pr-3">
-          <p className="text-lg tracking-wide text-gray-text">Cadastrar Empresa</p>
+          <p className="text-lg tracking-wide text-gray-text">
+            Cadastrar Empresa
+          </p>
           <button type="reset" aria-label="modal-close-icn">
             <Image
               src="/images/close-icn.svg"
@@ -48,7 +50,6 @@ export const CreateModal = () => {
             placeholder="Digite o nome"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            
           />
           {errors?.name ? (
             <span className="px-6 text-sm text-wine-brand">{errors.name}</span>
@@ -62,7 +63,6 @@ export const CreateModal = () => {
             maxLength={14}
             value={cnpj}
             onChange={(e) => setCnpj(e.target.value)}
-            
           />
           {errors?.cnpj ? (
             <span className="px-6 text-sm text-wine-brand">{errors.cnpj}</span>
@@ -76,7 +76,6 @@ export const CreateModal = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            
           />
           {errors?.email ? (
             <span className="px-6 text-sm text-wine-brand">{errors.name}</span>
