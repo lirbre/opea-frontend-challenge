@@ -9,7 +9,7 @@ import {
 } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Navbar } from '@/components/Navbar'
-import { Modal } from '@/components/Modal'
+import { EditModal } from '@/components/modal/Edit'
 
 const queryClient = new QueryClient()
 
@@ -22,7 +22,7 @@ const MyApp: AppType<{ dehydratedState: DehydratedState }> = ({
       <Hydrate state={pageProps.dehydratedState}>
         <Navbar />
         <Component {...pageProps} />
-        <Modal />
+        <EditModal />
       </Hydrate>
       <ReactQueryDevtools />
     </QueryClientProvider>
