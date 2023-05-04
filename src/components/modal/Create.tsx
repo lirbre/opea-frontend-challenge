@@ -3,7 +3,8 @@ import useForm from '@/hooks/useForm'
 import { CompanyForm } from '@/schemas/company'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { Input } from '../Input'
 
 export const CreateModal = () => {
@@ -17,7 +18,25 @@ export const CreateModal = () => {
   const [cnpj, setCnpj] = useState<string>('')
   const [email, setEmail] = useState<string>('')
 
-  const { errors, submitForm } = useForm(CompanyForm, createCompany)
+  const { errors, submitForm } = useForm(CompanyForm, (values) => {
+    createCompany(values)
+
+    toast.success(`${values.name} foi criada com sucesso!`)
+    replace({ href: asPath, query: { ...query, create: '' } })
+
+    setName('')
+    setCnpj('')
+    setEmail('')
+  })
+
+  useEffect(() => {
+    if (!!query.create) {
+      document.body.style.overflow = 'hidden'
+      return
+    }
+
+    document.body.style.overflow = 'visible'
+  }, [query.create])
 
   return open ? (
     <>
