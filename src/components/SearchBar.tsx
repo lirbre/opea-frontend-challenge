@@ -17,15 +17,15 @@ export const SearchBar = () => {
           query: { ...query, search: String(searchRef.current?.value) ?? '' }
         })
       }}
-      className="flex w-full max-w-xs gap-1.5 rounded-opea border-2 border-gray-input pr-2.5"
+      className="flex w-full max-w-xs gap-1.5 rounded-opea border-2 border-gray-input pr-2.5 bg-white"
     >
       <input
-        className="w-full max-w-xs rounded-opea px-2.5 py-1 text-sm tracking-wide text-gray-font"
+        className="w-full max-w-xs rounded-opea px-2.5 py-1 text-sm tracking-wide text-gray-font bg-transparent"
         placeholder="Buscar empresa..."
         defaultValue={String(query?.search ?? '')}
         ref={searchRef}
       />
-      <button className="rounded-full">
+      <button className="rounded-full bg-transparent">
         <Image
           src={'/images/search-icn.svg'}
           width={16}
