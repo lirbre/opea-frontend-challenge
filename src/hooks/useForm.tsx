@@ -24,7 +24,7 @@ const useForm = <TValues,>(
     return formated
   }
 
-  const submitForm = (values: unknown) => {
+  const submitForm = (values: z.infer<z.Schema<TValues>>) => {
     try {
       const newValues = schema.parse(values)
       submitCallback(newValues)
