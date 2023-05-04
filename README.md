@@ -51,11 +51,10 @@ pnpm dev
 
 ### Modal de editar:
 
-![image](https://user-images.githubusercontent.com/86065449/236282322-35c09797-876f-4079-97e8-6e59b496cdf8.png)
-![image](https://user-images.githubusercontent.com/86065449/236282372-9562e04c-14df-4c25-9bea-d9f6d48b3173.png)
+![image](https://user-images.githubusercontent.com/86065449/236286566-f761a07c-dfdb-445f-ac32-58f666528faa.png)
+![image](https://user-images.githubusercontent.com/86065449/236286385-db379bf0-3f1a-4239-ab9a-299f95026d06.png)
 
 ### Modal de cadastrar:
 
-![image](https://user-images.githubusercontent.com/86065449/236282147-5ae40223-78fa-40c6-86e2-bb75b079eba6.png)
-![image](https://user-images.githubusercontent.com/86065449/236282112-66754f6d-f98e-4d92-896e-a0c7e5085e8a.png)
-
+![image](https://user-images.githubusercontent.com/86065449/236286499-18198704-0b3f-4539-8fc8-b7e310d4ed72.png)
+![image](https://user-images.githubusercontent.com/86065449/236286603-1f46624b-d0b8-4bc3-95d8-b0e8b4079a42.png)
