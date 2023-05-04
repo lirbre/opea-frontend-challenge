@@ -4,7 +4,7 @@ import { CompanyAPI, CompanyForm } from '@/schemas/company'
 import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 import { Input } from '../Input'
 
@@ -13,7 +13,7 @@ export const EditModal = () => {
 
   const open = !!query.edit
 
-  const { companyList, updateCompany } = useCompany() 
+  const { companyList, updateCompany, deleteCompany } = useCompany()
 
   const [name, setName] = useState<string>('')
   const [cnpj, setCnpj] = useState<string>('')
@@ -21,19 +21,39 @@ export const EditModal = () => {
 
   const cleanedData = useMemo(() => {
     if (!companyList) return { id: '' }
-    
-    const temp = companyList.filter((item) => item.id === query.edit).map((item) => {
-      setName(item?.name ?? '')
-      setEmail(item?.email ?? '')
-      setCnpj(item?.cnpj ?? '')
 
-      return item
-    })    
+    const temp = companyList
+      .filter((item) => item.id === query.edit)
+      .map((item) => {
+        setName(item?.name ?? '')
+        setEmail(item?.email ?? '')
+        setCnpj(item?.cnpj ?? '')
+
+        return item
+      })
 
     return { id: temp[0]?.id }
   }, [companyList, query.edit])
 
-  const { errors, submitForm } = useForm(CompanyForm.extend({ id: z.string() }), updateCompany)
+  const { errors, submitForm } = useForm(
+    CompanyForm.extend({ id: z.string() }),
+    updateCompany
+  )
+
+  useEffect(() => {
+    if (!!query.edit) {
+      document.body.style.overflow = 'hidden'
+      return
+    }
+
+    document.body.style.overflow = 'visible'
+  }, [query.edit])
+
+  useEffect(() => {
+    if (cleanedData.id || !query.edit) return
+
+    replace({ href: asPath, query: { ...query, edit: '' } })
+  }, [cleanedData.id, asPath, query, replace])
 
   return open ? (
     <>
@@ -108,6 +128,7 @@ export const EditModal = () => {
           <button
             name="modal-delete"
             className="rounded-opea border-2 border-gray-button p-1.5 hover:opacity-80"
+            onClick={() => deleteCompany(String(query.edit || ''))}
           >
             <Image
               src="/images/delete-icn.svg"
