@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useRef } from 'react'
 
 export const SearchBar = () => {
-  const { asPath, replace, query } = useRouter()
+  const { pathname, replace, query } = useRouter()
 
   const searchRef = useRef<HTMLInputElement>(null)
 
@@ -12,10 +12,16 @@ export const SearchBar = () => {
       onSubmit={(e) => {
         e.preventDefault()
 
-        replace({
-          href: asPath,
-          query: { ...query, search: String(searchRef.current?.value) ?? '' }
-        })
+        const queryParams = new URLSearchParams(window.location.search)
+
+        if (searchRef.current?.value) {
+          queryParams.set('search', searchRef.current?.value)
+        } else {
+          queryParams.delete('search')
+        }
+        queryParams.delete('page')
+
+        replace(`${pathname}?${queryParams.toString()}`)
       }}
       className="flex w-full max-w-xs gap-1.5 rounded-opea border-2 border-gray-input bg-white py-1 pr-2.5"
     >

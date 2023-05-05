@@ -20,15 +20,23 @@ export const Company = ({
 }: {
   company: z.infer<typeof CompanyAPI>[number]
 }) => {
-  const { query, asPath, replace } = useRouter()
+  const { query, pathname, replace } = useRouter()
 
   return (
     <button
       aria-label={`Edit ${company.name} button`}
       className="flex h-20 w-full items-center gap-6 rounded-l-full border-2 border-transparent bg-white p-2 shadow-sm hover:opacity-80"
-      onClick={() =>
-        replace({ href: asPath, query: { ...query, edit: company.id } })
-      }
+      onClick={() => {
+        const queryParams = new URLSearchParams(window.location.search)
+
+        if (company.name) {
+          queryParams.set('edit', company.name)
+        } else {
+          queryParams.delete('edit')
+        }
+
+        replace(`${pathname}?${queryParams.toString()}`)
+      }}
     >
       <div className="flex items-center justify-center rounded-full border-2 border-gray-input px-3 py-2.5">
         <Image

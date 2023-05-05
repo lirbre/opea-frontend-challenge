@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 export const CompanyPagination = () => {
   const { totalPages } = useCompany()
 
-  const { query, asPath, replace } = useRouter()
+  const { query, asPath, replace, pathname } = useRouter()
 
   useEffect(() => {
     if (totalPages === 0) return
@@ -23,12 +23,17 @@ export const CompanyPagination = () => {
   return (
     <div className="flex items-center justify-center gap-1.5 rounded-opea border-2 border-gray-input bg-white-brand p-0.5 px-2.5">
       <button
-        onClick={() =>
-          replace({
-            href: asPath,
-            query: { ...query, page: +String(query.page ?? 1) - 1 }
-          })
-        }
+        onClick={() => {
+          const queryParams = new URLSearchParams(window.location.search)
+
+          if (+String(query?.page ?? 1) - 1 === 1) {
+            queryParams.delete('page')
+          } else {
+            queryParams.set('page', String(+String(query?.page ?? 1) - 1))
+          }
+
+          replace(`${pathname}?${queryParams.toString()}`)
+        }}
         className="enabled:text-wine-brand enabled:hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
         disabled={+String(query.page ?? 1) === 1}
       >
@@ -38,14 +43,21 @@ export const CompanyPagination = () => {
         {query.page ?? 1}
       </div>
       <button
-        onClick={() =>
-          replace({
-            href: asPath,
-            query: { ...query, page: +String(query.page ?? 1) + 1 }
-          })
-        }
+        onClick={() => {
+          const queryParams = new URLSearchParams(window.location.search)
+
+          if (+String(query?.page ?? 1) === totalPages) {
+            return
+          } else {
+            queryParams.set('page', String(+String(query?.page ?? 1) + 1))
+          }
+
+          replace(`${pathname}?${queryParams.toString()}`)
+        }}
         className="enabled:text-wine-brand enabled:hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
-        disabled={+String(query.page ?? 1) === totalPages || totalPages === 0}
+        disabled={
+          +String(query.page ?? 1) === totalPages || totalPages === 0
+        }
       >
         &#x2192;
       </button>

@@ -8,7 +8,7 @@ import { toast } from 'sonner'
 import { Input } from '../Input'
 
 export const CreateModal = () => {
-  const { query, asPath, replace } = useRouter()
+  const { query, replace, pathname } = useRouter()
 
   const open = !!query.create
 
@@ -18,11 +18,20 @@ export const CreateModal = () => {
   const [cnpj, setCnpj] = useState<string>('')
   const [email, setEmail] = useState<string>('')
 
+  const clearCreate = () => {
+    const queryParams = new URLSearchParams(window.location.search)
+
+    queryParams.delete('create')
+
+    replace(`${pathname}?${queryParams.toString()}`)
+  }
+
   const { errors, submitForm } = useForm(CompanyForm, (values) => {
     createCompany(values)
 
     toast.success(`${values.name} foi criada com sucesso!`)
-    replace({ href: asPath, query: { ...query, create: '' } })
+
+    clearCreate()
 
     setName('')
     setCnpj('')
@@ -43,9 +52,7 @@ export const CreateModal = () => {
       {' '}
       <div
         className="fixed bottom-1/2 right-1/2 flex h-screen w-screen translate-x-1/2 translate-y-1/2 cursor-pointer items-center justify-center backdrop-blur-sm"
-        onClick={() =>
-          replace({ href: asPath, query: { ...query, create: '' } })
-        }
+        onClick={() => clearCreate()}
       ></div>
       <form
         onSubmit={(e) => {
@@ -65,9 +72,7 @@ export const CreateModal = () => {
               height={20}
               alt="A close icon. An 'x' letter with a rounded border around it"
               className="cursor-pointer hover:opacity-80"
-              onClick={() =>
-                replace({ href: asPath, query: { ...query, create: '' } })
-              }
+              onClick={() => clearCreate()}
             />
           </button>
         </div>
@@ -117,9 +122,7 @@ export const CreateModal = () => {
               type="reset"
               className="rounded-opea border-2 border-gray-input px-3 py-2 tracking-wide text-gray-helper hover:opacity-80"
               aria-label="modal-cancel"
-              onClick={() =>
-                replace({ href: asPath, query: { ...query, create: '' } })
-              }
+              onClick={() => clearCreate()}
             >
               Cancelar
             </button>

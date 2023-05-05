@@ -3,12 +3,12 @@ import useForm from '@/hooks/useForm'
 import { CompanyForm } from '@/schemas/company'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { Input } from '../Input'
 
 export const EditModal = () => {
-  const { query, replace, asPath } = useRouter()
+  const { query, replace, pathname } = useRouter()
 
   const open = !!query.edit
 
@@ -22,7 +22,7 @@ export const EditModal = () => {
     if (!companyList) return { id: '', name: '', cnpj: '', email: '' }
 
     const temp = companyList
-      .filter((item) => item.id === query.edit)
+      .filter((item) => item.name === query.edit)
       .map((item) => {
         setName(item?.name ?? '')
         setEmail(item?.email ?? '')
@@ -34,11 +34,31 @@ export const EditModal = () => {
     return temp[0]
   }, [companyList, query.edit])
 
-  const { errors, submitForm, forceUpdateError } = useForm(CompanyForm, (values) => {
-    updateCompany({ body: values, id: String(query.edit ?? '') })
-    toast.success(`${cleanedData.name} foi editada com sucesso!`)
-    replace({ href: asPath, query: { ...query, edit: '' } })
-  })
+  const { errors, submitForm, forceUpdateError } = useForm(
+    CompanyForm,
+    (values) => {
+      updateCompany({ body: values, id: String(cleanedData.id ?? '') })
+      toast.success(`${cleanedData.name} foi editada com sucesso!`)
+
+      // clearing params (don't call clearEdit to prevent hoisting)
+
+      const queryParams = new URLSearchParams(window.location.search)
+
+      queryParams.delete('edit')
+      forceUpdateError(undefined)
+
+      replace(`${pathname}?${queryParams.toString()}`)
+    }
+  )
+
+  const clearEdit = useCallback(() => {
+    const queryParams = new URLSearchParams(window.location.search)
+
+    queryParams.delete('edit')
+    forceUpdateError(undefined)
+
+    replace(`${pathname}?${queryParams.toString()}`)
+  }, [forceUpdateError, pathname, replace])
 
   useEffect(() => {
     if (!!query.edit) {
@@ -52,15 +72,15 @@ export const EditModal = () => {
   useEffect(() => {
     if (cleanedData?.id || !query.edit) return forceUpdateError(undefined)
 
-    replace({ href: asPath, query: { ...query, edit: '' } })
-  }, [cleanedData, asPath, query, replace, forceUpdateError])
+    clearEdit()
+  }, [cleanedData, clearEdit, forceUpdateError, query])
 
   return open ? (
     <>
       {' '}
       <div
         className="fixed bottom-1/2 right-1/2 flex h-screen w-screen translate-x-1/2 translate-y-1/2 cursor-pointer items-center justify-center backdrop-blur-sm"
-        onClick={() => replace({ href: asPath, query: { ...query, edit: '' } })}
+        onClick={clearEdit}
       ></div>
       <form
         onSubmit={(e) => {
@@ -78,9 +98,7 @@ export const EditModal = () => {
               height={20}
               alt="A close icon. An 'x' letter with a rounded border around it"
               className="cursor-pointer hover:opacity-80"
-              onClick={() =>
-                replace({ href: asPath, query: { ...query, edit: '' } })
-              }
+              onClick={clearEdit}
             />
           </button>
         </div>
@@ -130,14 +148,14 @@ export const EditModal = () => {
             type="reset"
             className="rounded-opea border-2 border-gray-button p-1.5 hover:opacity-80"
             onClick={() => {
-              deleteCompany(String(query.edit || ''))
-              replace({ href: asPath, query: { ...query, edit: '' } })
+              deleteCompany(String(cleanedData.id || ''))
+              clearEdit()
             }}
           >
             <Image
               src="/images/delete-icn.svg"
               width={16}
-              height={16}
+              height={19}
               alt="A trash can"
             />
           </button>
@@ -146,9 +164,7 @@ export const EditModal = () => {
               type="reset"
               className="rounded-opea border-2 border-gray-input px-3 py-2 tracking-wide text-gray-helper hover:opacity-80"
               aria-label="modal-cancel"
-              onClick={() =>
-                replace({ href: asPath, query: { ...query, edit: '' } })
-              }
+              onClick={clearEdit}
             >
               Cancelar
             </button>
