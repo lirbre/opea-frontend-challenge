@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export const LoadingCompany = () => {
   return (
-    <div className="flex w-full animate-pulse items-center gap-6 rounded-l-full border-2 border-transparent bg-gradient-to-r from-transparent  via-rose-100/10 to-transparent p-2 shadow-sm">
+    <div className="flex h-20 w-full animate-pulse items-center gap-6 rounded-l-full border-2 border-transparent bg-gradient-to-r from-transparent  via-rose-100/10 to-transparent p-2 shadow-sm">
       <div className="flex items-center justify-center rounded-full border-2 border-gray-input px-3 py-2.5">
         <Image
           src="/images/clipboard-list-icn.svg"

@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export const EmptyCompany = () => {
   return (
-    <div className="flex w-full items-center gap-6 rounded-l-full border-2 border-transparent bg-white p-2 shadow-sm">
+    <div className="flex h-20 w-full items-center gap-6 rounded-l-full border-2 border-transparent bg-white p-2 shadow-sm">
       <div className="flex items-center justify-center rounded-full border-2 border-gray-input px-3 py-2.5">
         <Image
           src="/images/clipboard-list-icn.svg"
