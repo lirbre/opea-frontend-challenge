@@ -19,7 +19,9 @@ export const CompanyList = () => {
     <div className="mx-auto flex w-full max-w-[1980px] flex-col gap-1.5 px-4 py-4 lg:px-8">
       <CreateCompany />
       {paginatedData?.length ? (
-        paginatedData?.map((item) => <Company key={item.id} company={item} />)
+        paginatedData?.map((item, i) => (
+          <Company key={item.id} company={item} position={i} />
+        ))
       ) : (
         <EmptyCompany />
       )}

@@ -16,17 +16,19 @@ export const maskCnpj = (document: string) => {
 }
 
 export const Company = ({
-  company
+  company,
+  position
 }: {
   company: z.infer<typeof CompanyAPI>[number]
+  position: number
 }) => {
   const { pathname, replace } = useRouter()
 
-  const handleSearch = () => {
+  const handleEdit = () => {
     const queryParams = new URLSearchParams(window.location.search)
 
     if (company.name) {
-      queryParams.set('edit', company.name)
+      queryParams.set('edit', String(position))
     } else {
       queryParams.delete('edit')
     }
@@ -39,7 +41,7 @@ export const Company = ({
       name={`Edit ${company.name} button`}
       aria-label={`Edit ${company.name} button`}
       className="flex h-20 w-full items-center gap-6 rounded-l-full border-2 border-transparent bg-white p-2 shadow-sm hover:opacity-80"
-      onClick={handleSearch}
+      onClick={handleEdit}
     >
       <div className="flex items-center justify-center rounded-full border-2 border-gray-input px-3 py-2.5">
         <Image

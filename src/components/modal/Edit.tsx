@@ -21,17 +21,22 @@ export const EditModal = () => {
   const cleanedData = useMemo(() => {
     if (!companyList) return { id: '', name: '', cnpj: '', email: '' }
 
-    const temp = companyList
-      .filter((item) => item.name === query.edit)
-      .map((item) => {
-        setName(item?.name ?? '')
-        setEmail(item?.email ?? '')
-        setCnpj(item?.cnpj ?? '')
+    const choosenItem = companyList?.at(+String(query?.edit) ?? 0)
 
-        return item
-      })
+    if (choosenItem) {
+      setName(choosenItem?.name ?? '')
+      setEmail(choosenItem?.email ?? '')
+      setCnpj(choosenItem?.cnpj ?? '')
 
-    return temp[0]
+      return choosenItem
+    }
+
+    return {
+      cnpj: '',
+      email: '',
+      id: 'empty-id',
+      name: ''
+    } as (typeof companyList)[number]
   }, [companyList, query.edit])
 
   const { errors, submitForm, forceUpdateError } = useForm(
@@ -70,7 +75,8 @@ export const EditModal = () => {
   }, [query.edit])
 
   useEffect(() => {
-    if (cleanedData?.id || !query.edit) return forceUpdateError(undefined)
+    if (cleanedData?.id !== 'empty-id' || !query.edit)
+      return forceUpdateError(undefined)
 
     clearEdit()
   }, [cleanedData, clearEdit, forceUpdateError, query])
