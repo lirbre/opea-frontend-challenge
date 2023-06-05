@@ -1,28 +1,30 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useRef } from 'react'
+import { useRef, FormEvent } from 'react'
 
 export const SearchBar = () => {
   const { pathname, replace, query } = useRouter()
 
   const searchRef = useRef<HTMLInputElement>(null)
 
+  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const queryParams = new URLSearchParams(window.location.search)
+
+    if (searchRef.current?.value) {
+      queryParams.set('search', searchRef.current?.value)
+    } else {
+      queryParams.delete('search')
+    }
+    queryParams.delete('page')
+
+    replace(`${pathname}?${queryParams.toString()}`)
+  }
+
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault()
-
-        const queryParams = new URLSearchParams(window.location.search)
-
-        if (searchRef.current?.value) {
-          queryParams.set('search', searchRef.current?.value)
-        } else {
-          queryParams.delete('search')
-        }
-        queryParams.delete('page')
-
-        replace(`${pathname}?${queryParams.toString()}`)
-      }}
+      onSubmit={handleSearch}
       className="flex w-full max-w-xs gap-1.5 rounded-opea border-2 border-gray-input bg-white py-1 pr-2.5"
     >
       <input
