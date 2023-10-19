@@ -21,7 +21,7 @@ export const useCompany = () => {
     [...companyListKey, { search: query.search ?? '' }],
     () =>
       fetch(
-        `https://homolog.planetasec.com.br/prova/front/api/clients${
+        `https://outros.opea-uat.solutions/prova/front/api/clients${
           query.search ? '?text=' + query.search : ''
         }`
       ).then(async (res) => {
@@ -39,7 +39,7 @@ export const useCompany = () => {
 
   const { mutate: deleteCompany } = useMutation(
     (id: string) =>
-      fetch('https://homolog.planetasec.com.br/prova/front/api/clients/' + id, {
+      fetch('https://outros.opea-uat.solutions/prova/front/api/clients/' + id, {
         body: JSON.stringify({ id }),
         method: 'DELETE',
         headers: {
@@ -61,7 +61,7 @@ export const useCompany = () => {
 
   const { mutate: createCompany } = useMutation(
     (body: z.infer<typeof CompanyForm>) =>
-      fetch('https://homolog.planetasec.com.br/prova/front/api/clients', {
+      fetch('https://outros.opea-uat.solutions/prova/front/api/clients', {
         body: JSON.stringify({ ...body }),
         method: 'POST',
         headers: {
@@ -77,7 +77,7 @@ export const useCompany = () => {
 
   const { mutate: updateCompany } = useMutation(
     ({ body, id }: { body: z.infer<typeof CompanyForm>; id: string }) =>
-      fetch('https://homolog.planetasec.com.br/prova/front/api/clients/' + id, {
+      fetch('https://outros.opea-uat.solutions/prova/front/api/clients/' + id, {
         body: JSON.stringify({ ...body }),
         method: 'PUT',
         headers: {
